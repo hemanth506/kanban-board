@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Kanban board</title>
+</head>
+
+<body id="main">
+  <section class="main-title">
+    <h2>Kaban board</h2>
+  </section>
+
+  <section id="input-container">
+    <!-- <input class="input-field" type="text" placeholder="Create a new project">
+    <button class="button create-project">Create</button>
+    <select id="project-list" class="input-field" name="project-list">
+      <option value="">Select project</option>
+      <option value="project-1">Project 1</option>
+      <option value="project-2">Project 2</option>
+    </select> -->
+    <input class="input-field" type="text" placeholder="Filter by keywords">
+    <button class="button save-filter">Save</button>
+  </section>
+
+  <section id="board-container">
+
+
+    <div class="board todo">
+      <div class="heading">
+        <div class="head">
+          <div class="circle"></div>
+          <p class="title">Todo</p>
+        </div>
+        <div class="counter todo-count"></div>
+      </div>
+      <div class="tasks-board todo-tasks-board" board="todo">
+        <p class="task" draggable="true">Task 1</p>
+        <p class="task" draggable="true">Task 2</p>
+        <p class="task" draggable="true">Task 3</p>
+      </div>
+      <div class="add-item-container" board="todo">
+        <div class="input-section todo-section">
+          <input class="input-field todo-input" type="text" placeholder="Start typing to create an draft item">
+          <button class="create-task-btn" board="todo">+</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="board inprogress">
+      <div class="heading">
+        <div class="head">
+          <div class="circle"></div>
+          <p class="title">In-Progress</p>
+        </div>
+        <p class="counter inprogress-count"></p>
+      </div>
+      <div class="tasks-board inprogress-tasks-board" board="inprogress">
+        <p class="task" draggable="true">Task 4</p>
+      </div>
+      <div class="add-item-container" board="inprogress">
+        <div class="input-section inprogress-section">
+          <input class="input-field inprogress-input" board="inprogress" type="text"
+            placeholder="Start typing to create an draft item">
+          <button class="create-task-btn" board="inprogress">+</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="board done">
+      <div class="heading">
+        <div class="head">
+          <div class="circle"></div>
+          <p class="title">Done</p>
+        </div>
+        <p class="counter done-count"></p>
+      </div>
+      <div class="tasks-board done-tasks-board" board="done">
+        <p class="task" draggable="true">Task 7</p>
+      </div>
+      <div class="add-item-container" board="done">
+        <!-- <p class="add-item done-para" board="done"><strong>+</strong>Add Item</p> -->
+        <div class="input-section done-section">
+          <input class="input-field done-input" board="done" type="text"
+            placeholder="Start typing to create an draft item">
+          <button class="create-task-btn" board="done">+</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="plus-board">
+      <div class="plus">+</div>
+    </div>
+
+  </section>
+
+
+  <script src="utils.js"></script>
+  <script src="kanban.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Poppins;
+}
+
+
+#main {
+  display: grid;
+  grid-template-rows: 60px 11% auto;
+  height: 550px;
+}
+
+.main-title {
+  margin: 5px 20px;
+  display: flex;
+  align-items: center;
+}
+
+#board-container {
+  display: flex;
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+.board {
+  border: 1px solid rgb(216, 222, 228);
+  width: 300px;
+  border-radius: 8px;
+  padding: 10px 15px;
+  min-height: 380px;
+  background-color: rgb(246, 248, 250);
+  display: grid;
+  grid-template-rows: 8% auto 10%;
+}
+
+.task {
+  border: 1px solid rgb(208, 215, 222);
+  margin: 8px 0px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.todo>.tasks-board>.is-dragging {
+  border: 1px solid rgb(0, 255, 72);
+}
+
+.inprogress>.tasks-board>.is-dragging {
+  border: 1px solid rgb(255, 174, 0);
+}
+
+.done>.tasks-board>.is-dragging {
+  border: 1px solid rgb(119, 0, 255);
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+  /* width: 280px; */
+}
+
+.head {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  border-width: 2px;
+  border-style: solid;
+  width: 14px;
+  height: 14px;
+  border-radius: 50px;
+  margin-right: 8px;
+}
+
+.todo>.heading>.head>.circle {
+  background-color: rgb(218, 251, 225);
+  border-color: rgb(31, 136, 61);
+}
+
+.inprogress>.heading>.head>.circle {
+  background-color: rgb(251, 242, 218);
+  border-color: rgb(136, 103, 31);
+}
+
+.done>.heading>.head>.circle {
+  background-color: rgb(241, 218, 251);
+  border-color: rgb(80, 31, 136);
+}
+
+.add-item-container {
+  cursor: pointer;
+  width: 300px;
+}
+
+
+.add-item-container>.input-section>.input-field {
+  width: 250px;
+}
+
+#input-container {
+  display: grid;
+  grid-template-columns: 9fr 1fr 2fr;
+  gap: 12px;
+  padding: 10px 20px;
+  height: 30px;
+  width: 1400px;
+}
+
+.input-field {
+  padding: 5px;
+  border-radius: 8px;
+  border: 0.5px solid;
+}
+
+#input-container>.button {
+  border-radius: 8px;
+  border: 0.5px solid;
+  cursor: pointer;
+}
+
+strong {
+  font-size: 17px;
+  margin-right: 4px;
+}
+
+.todo>.add-item-container>.add-item:hover {
+  color: rgb(0, 255, 72);
+  font-weight: 500;
+}
+
+.inprogress>.add-item-container>.add-item:hover {
+  color: rgb(255, 174, 0);
+  font-weight: 500;
+}
+
+.done>.add-item-container>.add-item:hover {
+  color: rgb(98, 0, 211);
+  font-weight: 500;
+}
+
+
+.input-section {
+  display: none;
+}
+
+.create-task-btn {
+  width: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid rgb(216, 222, 228);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+:root {
+  --add-div-height: 38px
+}
+
+.plus-board {
+  display: flex;
+  font-size: 25px;
+  height: var(--add-div-height);
+  border-radius: 8px;
+  padding: 5px 15px;
+  border: 1px solid rgb(216, 222, 228);
+  background-color: rgb(246, 248, 250);
+  cursor: pointer;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.add-new-board {
+  display: flex;
+  height: var(--add-div-height);
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-new-board>input {
+  padding: 3px 5px;
+  border-radius: 3px;
+  border: 1px solid rgb(216, 222, 228);
+}
+
+.add-board {
+  width: 35px;
+  height: 28px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid rgb(216, 222, 228);
+  font-weight: 500;
+}
