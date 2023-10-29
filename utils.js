@@ -28,7 +28,8 @@ const setDragOverProperty = () => {
   });
 };
 
-const setBoardAttributeToElement = (element, board) => element.setAttribute("board", board);
+const setBoardAttributeToElement = (element, board) =>
+  element.setAttribute("board", board);
 
 const createDiv = (className = "") => {
   const div = document.createElement("div");

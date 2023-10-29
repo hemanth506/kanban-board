@@ -39,7 +39,7 @@ const triggerAddItemFunctionality = () => {
       }
     });
   });
-}
+};
 
 triggerAddItemFunctionality();
 setDraggableProperty();
@@ -53,13 +53,13 @@ const triggerCreateTaskBtn = () => {
       if (board) {
         const inputObject = document.querySelector(`.${board}-input`);
         const inputValue = inputObject.value;
-  
+
         if (inputValue) {
           const newTask = createNewTask(inputValue);
           const tasksBoard = document.querySelector(`.${board}-tasks-board`);
           tasksBoard.appendChild(newTask);
           setDraggableProperty();
-  
+
           inputObject.value = "";
           document.querySelector(`.${board}-section`).style.display = "none";
           document.querySelector(`.${board}-para`).style.display = "block";
@@ -68,7 +68,7 @@ const triggerCreateTaskBtn = () => {
       }
     });
   });
-}
+};
 
 triggerCreateTaskBtn();
 
@@ -105,7 +105,12 @@ const setaddBoardFunctionality = () => {
     const boardName = addBoardInput.value;
     console.log(boardName);
     const newboard = createNewBoardElement(boardName);
-    console.log("🚀 ~ file: kanban.js:99 ~ newboard:", newboard, plusBoard, boardContainer);
+    console.log(
+      "🚀 ~ file: kanban.js:99 ~ newboard:",
+      newboard,
+      plusBoard,
+      boardContainer
+    );
     boardContainer.insertBefore(newboard, plusBoard);
     setDragOverProperty();
     triggerAddItemFunctionality();
