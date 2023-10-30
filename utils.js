@@ -1,5 +1,7 @@
+const getAllTasks = () => document.querySelectorAll(".task");
+
 const setDraggableProperty = () => {
-  const tasks = document.querySelectorAll(".task");
+  const tasks = getAllTasks();
   tasks.forEach((task) => {
     task.addEventListener("dragstart", (e) => {
       task.classList.add("is-dragging");

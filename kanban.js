@@ -2,10 +2,29 @@ const addItemContainer = document.querySelectorAll(".add-item-container");
 const plusBoard = document.querySelector(".plus-board");
 const plusBtn = document.querySelector(".plus");
 const boardContainer = document.querySelector("#board-container");
+const saveFilterBtn = document.querySelector(".save-filter");
 
 addItemContainer.forEach((container) => {
   const board = container.getAttribute("board");
   container.appendChild(createTaskElement(board));
+});
+
+saveFilterBtn.addEventListener("click", () => {
+  const allTasks = getAllTasks();
+  console.log("🚀", allTasks.length);
+  const filterInput = document
+    .querySelector(".input-filter")
+    .value.toLowerCase();
+  console.log(`"${filterInput}"`);
+  allTasks.forEach((task) => {
+    const innerText = task.innerText.toLowerCase();
+    if (innerText.includes(filterInput)) {
+      task.style.display = "block";
+    } else {
+      task.style.display = "none";
+    }
+  });
+  setTaskCount();
 });
 
 const getClosestElement = (board, yAxis) => {
@@ -75,9 +94,17 @@ triggerCreateTaskBtn();
 const setTaskCount = () => {
   const taskBoards = getAllTaskBoards();
   taskBoards.forEach((taskBoard) => {
-    const totalTasksPerBoard = taskBoard.querySelectorAll(".task").length;
+    const tasksPerBoard = taskBoard.querySelectorAll(".task");
+    let totalTasksLength = tasksPerBoard.length;
+    tasksPerBoard.forEach((task) => {
+      const computedStyle = window.getComputedStyle(task);
+      if (computedStyle.getPropertyValue("display") === "none") {
+        totalTasksLength--;
+      }
+    });
+
     const board = taskBoard.getAttribute("board");
-    document.querySelector(`.${board}-count`).innerText = totalTasksPerBoard;
+    document.querySelector(`.${board}-count`).innerText = totalTasksLength;
   });
 };
 
