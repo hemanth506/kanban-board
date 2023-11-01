@@ -119,16 +119,18 @@ const setaddBoardFunctionality = () => {
     addNewBoardDiv.remove();
     plusBtn.innerText = "+";
     const boardName = addBoardInput.value;
-    console.log(boardName);
-    const newboard = createNewBoardElement(boardName);
-    console.log(
-      "🚀 ~ file: kanban.js:99 ~ newboard:",
-      newboard,
-      plusBoard,
-      boardContainer
-    );
-    boardContainer.insertBefore(newboard, plusBoard);
-    defaultFunctions();
+    console.log("boardName = " + boardName);
+    if(boardName) {
+      const newboard = createNewBoardElement(boardName);
+      console.log(
+        "🚀 ~ file: kanban.js:99 ~ newboard:",
+        newboard,
+        plusBoard,
+        boardContainer
+      );
+      boardContainer.insertBefore(newboard, plusBoard);
+      defaultFunctions();
+    }
   });
 };
 
