@@ -30,6 +30,9 @@ const setDragOverProperty = () => {
   });
 };
 
+const getAddBoardInputElement = () =>
+  document.querySelector(".add-board-input");
+
 const setBoardAttributeToElement = (element, board) =>
   element.setAttribute("board", board);
 

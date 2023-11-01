@@ -102,9 +102,6 @@ const setTaskCount = () => {
   });
 };
 
-const getAddBoardInputElement = () =>
-  document.querySelector(".add-board-input");
-
 plusBtn.addEventListener("click", () => {
   const holderDiv = addBoardDiv();
   plusBtn.innerText = "";
@@ -131,17 +128,20 @@ const setaddBoardFunctionality = () => {
       boardContainer
     );
     boardContainer.insertBefore(newboard, plusBoard);
-    setDragOverProperty();
-    triggerAddItemFunctionality();
-    triggerCreateTaskBtn();
-    setTaskCount();
+    defaultFunctions();
   });
 };
 
+const defaultFunctions = () => {
+  setDragOverProperty();
+  triggerAddItemFunctionality();
+  triggerCreateTaskBtn();
+  setTaskCount();
+};
 
-triggerAddItemFunctionality();
-setDraggableProperty();
-setDragOverProperty();
+const init = () => {
+  setDraggableProperty();
+  defaultFunctions();
+};
 
-triggerCreateTaskBtn();
-setTaskCount();
+init();
