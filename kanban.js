@@ -60,10 +60,6 @@ const triggerAddItemFunctionality = () => {
   });
 };
 
-triggerAddItemFunctionality();
-setDraggableProperty();
-setDragOverProperty();
-
 const triggerCreateTaskBtn = () => {
   const createTaskBtn = document.querySelectorAll(".create-task-btn");
   createTaskBtn.forEach((btn) => {
@@ -89,8 +85,6 @@ const triggerCreateTaskBtn = () => {
   });
 };
 
-triggerCreateTaskBtn();
-
 const setTaskCount = () => {
   const taskBoards = getAllTaskBoards();
   taskBoards.forEach((taskBoard) => {
@@ -107,8 +101,6 @@ const setTaskCount = () => {
     document.querySelector(`.${board}-count`).innerText = totalTasksLength;
   });
 };
-
-setTaskCount();
 
 const getAddBoardInputElement = () =>
   document.querySelector(".add-board-input");
@@ -145,3 +137,11 @@ const setaddBoardFunctionality = () => {
     setTaskCount();
   });
 };
+
+
+triggerAddItemFunctionality();
+setDraggableProperty();
+setDragOverProperty();
+
+triggerCreateTaskBtn();
+setTaskCount();

@@ -185,6 +185,7 @@ strong {
   justify-content: center;
   font-size: 13px;
   font-weight: 500;
+  color: darkgray;
 }
 
 .add-new-board {
