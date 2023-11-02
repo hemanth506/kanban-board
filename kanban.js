@@ -45,6 +45,10 @@ const getClosestElement = (board, yAxis) => {
   return closestElement;
 };
 
+/**
+ * Trigger add item functionality:
+    for all hardcoded board and for newly created boards
+ */
 const triggerAddItemFunctionality = () => {
   const addItemButtons = document.querySelectorAll(".add-item");
   addItemButtons.forEach((elt) => {
@@ -60,6 +64,10 @@ const triggerAddItemFunctionality = () => {
   });
 };
 
+/**
+ * trigger Create Task Btn:
+    triggers a click event for creating new task 
+ */
 const triggerCreateTaskBtn = () => {
   const createTaskBtn = document.querySelectorAll(".create-task-btn");
   createTaskBtn.forEach((btn) => {
@@ -85,6 +93,9 @@ const triggerCreateTaskBtn = () => {
   });
 };
 
+/***
+ * set the task count for each board
+ */
 const setTaskCount = () => {
   const taskBoards = getAllTaskBoards();
   taskBoards.forEach((taskBoard) => {
@@ -106,17 +117,17 @@ plusBtn.addEventListener("click", () => {
   const holderDiv = addBoardDiv();
   plusBtn.innerText = "";
   plusBoard.appendChild(holderDiv);
-  setaddBoardFunctionality();
+  setAddBoardFunctionality();
   const addBoardInput = getAddBoardInputElement();
   addBoardInput.focus();
 });
 
-const setaddBoardFunctionality = () => {
+const setAddBoardFunctionality = () => {
   const addBoard = document.querySelector(".add-board");
   const addNewBoardDiv = document.querySelector(".add-new-board");
   const addBoardInput = getAddBoardInputElement();
   addBoard.addEventListener("click", () => {
-    addNewBoardDiv.remove();
+    addNewBoardDiv.remove(); // remove add button and replace with input field and add button
     plusBtn.innerText = "+";
     const boardName = addBoardInput.value;
     console.log("boardName = " + boardName);
@@ -141,9 +152,6 @@ const defaultFunctions = () => {
   setTaskCount();
 };
 
-const init = () => {
-  setDraggableProperty();
-  defaultFunctions();
-};
 
-init();
+setDraggableProperty();
+defaultFunctions();

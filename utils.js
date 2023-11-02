@@ -1,5 +1,6 @@
 const getAllTasks = () => document.querySelectorAll(".task");
 
+/* Setting drag start and drag end property for all tasks */
 const setDraggableProperty = () => {
   const tasks = getAllTasks();
   tasks.forEach((task) => {
@@ -13,6 +14,7 @@ const setDraggableProperty = () => {
   });
 };
 
+/* Setting drag over property for all boards and for new boards which is created */
 const setDragOverProperty = () => {
   const taskBoards = getAllTaskBoards();
   taskBoards.forEach((board) => {
@@ -84,7 +86,6 @@ const addBoardDiv = () => {
     "Enter Board name",
     "text"
   );
-
   const buttonElement = document.createElement("button");
   buttonElement.innerText = "Add";
   buttonElement.className = "add-board";
@@ -93,6 +94,7 @@ const addBoardDiv = () => {
   return holder;
 };
 
+// Create new board
 const createNewBoardElement = (boardName) => {
   const boardTitle = boardName.toLowerCase().trim();
   const mainBoardDiv = createDiv(`board ${boardTitle}`);
