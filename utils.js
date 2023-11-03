@@ -19,9 +19,11 @@ const setDragOverProperty = () => {
   const taskBoards = getAllTaskBoards();
   taskBoards.forEach((board) => {
     board.addEventListener("dragover", (e) => {
+      e.preventDefault();
       const taskDragged = document.querySelector(".is-dragging");
       const closestElt = getClosestElement(board, e.clientY);
-
+      // const curBoard = getBoardAttribute(board);
+      // console.log("🚀 ~ file: utils.js:27 ~ curBoard:", curBoard)
       if (closestElt) {
         board.insertBefore(taskDragged, closestElt);
       } else {
@@ -30,7 +32,20 @@ const setDragOverProperty = () => {
       setTaskCount();
     });
   });
+
+  taskBoards.forEach((board) => {
+    board.addEventListener("drop", (e) => {
+      const curBoard = getBoardAttribute(board);
+      console.log(e)
+      console.log("🚀 ~ file: utils.js:38 ~ curBoard:", curBoard);
+    });
+  });
 };
+
+const getLocalStorage = (variable) => localStorage.getItem(variable);
+
+const setLocalStorage = (variable, value) =>
+  localStorage.setItem(variable, JSON.stringify(value));
 
 const getAddBoardInputElement = () =>
   document.querySelector(".add-board-input");
@@ -47,6 +62,7 @@ const createDiv = (className = "") => {
 const createParagraph = (className = "") => {
   const para = document.createElement("p");
   para.className = className;
+  para.id = Date.now();
   return para;
 };
 
@@ -92,6 +108,18 @@ const addBoardDiv = () => {
   holder.appendChild(inputElement);
   holder.appendChild(buttonElement);
   return holder;
+};
+
+const addBoardToLocalStorage = (boardName) => {
+  const boardList = JSON.parse(getLocalStorage("boardList"));
+  if (boardList) {
+    let newBoardData = {
+      title: boardName,
+      description: "Newly created board",
+    };
+    boardList.push(newBoardData);
+  }
+  setLocalStorage("boardList", boardList);
 };
 
 // Create new board

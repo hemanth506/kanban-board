@@ -131,15 +131,10 @@ const setAddBoardFunctionality = () => {
     plusBtn.innerText = "+";
     const boardName = addBoardInput.value;
     console.log("boardName = " + boardName);
-    if(boardName) {
+    if (boardName) {
       const newboard = createNewBoardElement(boardName);
-      console.log(
-        "🚀 ~ file: kanban.js:99 ~ newboard:",
-        newboard,
-        plusBoard,
-        boardContainer
-      );
       boardContainer.insertBefore(newboard, plusBoard);
+      addBoardToLocalStorage(boardName);
       defaultFunctions();
     }
   });
@@ -152,6 +147,34 @@ const defaultFunctions = () => {
   setTaskCount();
 };
 
+const boardList = getLocalStorage("boardList");
+let defaultboards = [];
+if (!boardList) {
+  defaultboards = [
+    {
+      title: "todo",
+      description: "work to start",
+    },
+    {
+      title: "inprogress",
+      description: "work in progress",
+    },
+    {
+      title: "done",
+      description: "work completed",
+    },
+  ];
+  setLocalStorage("boardList", defaultboards);
+  console.log("🚀 ~ file: kanban.js:159 ~ defaultboards:", defaultboards);
+} else {
+  defaultboards = JSON.parse(boardList);
+  console.log("🚀 ~ file: kanban.js:182 ~ currentBoards:", defaultboards);
+}
+
+defaultboards.forEach((board) => {
+  const newBoard = createNewBoardElement(board.title);
+  boardContainer.insertBefore(newBoard, plusBoard);
+});
 
 setDraggableProperty();
 defaultFunctions();
