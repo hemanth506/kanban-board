@@ -40,7 +40,7 @@ const unlockClickHandler = (element) => {
 };
 
 /* Setting drag over property for all boards and for new boards which is created */
-const setDragOverProperty = () => {
+const setDragOverHandler = () => {
   const taskBoards = getAllTaskBoards();
   taskBoards.forEach((board) => {
     board.addEventListener("dragover", (e) => {

@@ -140,7 +140,7 @@ const setAddBoardFunctionality = () => {
 };
 
 const defaultFunctions = () => {
-  setDragOverProperty();
+  setDragOverHandler();
   triggerAddItemFunctionality();
   triggerCreateTaskBtn();
   setTaskCount();
