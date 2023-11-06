@@ -1,16 +1,13 @@
 const getAllTasks = () => document.querySelectorAll(".task");
 
 /* Setting drag start and drag end property for all tasks */
-const setDraggableProperty = () => {
-  const tasks = getAllTasks();
-  tasks.forEach((task) => {
-    task.addEventListener("dragstart", (e) => {
-      task.classList.add("is-dragging");
-    });
+const setDragListener = (task) => {
+  task.addEventListener("dragstart", (e) => {
+    task.classList.add("is-dragging");
+  });
 
-    task.addEventListener("dragend", (e) => {
-      task.classList.remove("is-dragging");
-    });
+  task.addEventListener("dragend", (e) => {
+    task.classList.remove("is-dragging");
   });
 };
 
@@ -41,18 +38,6 @@ const unlockClickHandler = (element) => {
     siblings[lockIconIndex].style.display = "block";
   });
 };
-
-// const triggerEventToLocks = () => {
-//   const lockIcon = document.getElementsByClassName("lock-icon");
-//   const unLockIcon = document.getElementsByClassName("unlock-icon");
-//   console.log("🚀 ~ file: utils.js:26 ~ lockIcon", lockIcon);
-//   console.log("🚀 ~ file: utils.js:27 ~ unLockIcon:", unLockIcon);
-
-//   for (let i = 0; i < lockIcon.length; i++) {
-//     lockClickHandler(lockIcon[i]);
-//     unlockClickHandler(unLockIcon[i]);
-//   }
-// };
 
 /* Setting drag over property for all boards and for new boards which is created */
 const setDragOverProperty = () => {
@@ -150,6 +135,7 @@ const createNewTask = (taskName = "No-Title") => {
   const elt = createDiv("task");
   elt.setAttribute("draggable", "true");
   elt.innerText = taskName;
+  setDragListener(elt);
   const innerElt = createIconsDiv();
   // console.log("🚀 ~ file: utils.js:142 ~ createNewTask ~ innerElt:", innerElt);
   elt.appendChild(innerElt);
