@@ -14,6 +14,46 @@ const setDraggableProperty = () => {
   });
 };
 
+const getParentAndSiblings = (element) => {
+  const parent = element.parentElement;
+  const siblings = Array.from(parent.children);
+  return [parent.parentElement, siblings];
+};
+
+const lockClickHandler = (element) => {
+  element.addEventListener("click", () => {
+    const [grandParent, siblings] = getParentAndSiblings(element);
+    grandParent.setAttribute("draggable", "true");
+    const lockIconIndex = siblings.indexOf(element);
+    const unlockIconIndex = lockIconIndex + 1;
+    element.style.display = "none";
+    siblings[unlockIconIndex].style.display = "block";
+  });
+};
+
+const unlockClickHandler = (element) => {
+  element.addEventListener("click", () => {
+    const [grandParent, siblings] = getParentAndSiblings(element);
+    grandParent.setAttribute("draggable", "false");
+    const unlockIconIndex = siblings.indexOf(element);
+    const lockIconIndex = unlockIconIndex - 1;
+    element.style.display = "none";
+    siblings[lockIconIndex].style.display = "block";
+  });
+};
+
+// const triggerEventToLocks = () => {
+//   const lockIcon = document.getElementsByClassName("lock-icon");
+//   const unLockIcon = document.getElementsByClassName("unlock-icon");
+//   console.log("🚀 ~ file: utils.js:26 ~ lockIcon", lockIcon);
+//   console.log("🚀 ~ file: utils.js:27 ~ unLockIcon:", unLockIcon);
+
+//   for (let i = 0; i < lockIcon.length; i++) {
+//     lockClickHandler(lockIcon[i]);
+//     unlockClickHandler(unLockIcon[i]);
+//   }
+// };
+
 /* Setting drag over property for all boards and for new boards which is created */
 const setDragOverProperty = () => {
   const taskBoards = getAllTaskBoards();
@@ -36,7 +76,8 @@ const setDragOverProperty = () => {
   taskBoards.forEach((board) => {
     board.addEventListener("drop", (e) => {
       const curBoard = getBoardAttribute(board);
-      console.log(e)
+      /* set the local variable here */
+      // console.log(e);
       console.log("🚀 ~ file: utils.js:38 ~ curBoard:", curBoard);
     });
   });
@@ -62,7 +103,6 @@ const createDiv = (className = "") => {
 const createParagraph = (className = "") => {
   const para = document.createElement("p");
   para.className = className;
-  para.id = Date.now();
   return para;
 };
 
@@ -80,7 +120,7 @@ const createTaskElement = (board) => {
   const elt = createParagraph(`add-item ${board}-para`);
   setBoardAttributeToElement(elt, board);
   elt.appendChild(strong);
-  elt.innerHTML += "Add Item";
+  elt.innerHTML += "Add Task";
   return elt;
 };
 
@@ -88,10 +128,34 @@ const getBoardAttribute = (element) => element.getAttribute("board");
 
 const getAllTaskBoards = () => document.querySelectorAll(".tasks-board");
 
+const createIconsDiv = () => {
+  const innerElt = createDiv("task-icon");
+  const lockIcon = document.createElement("i");
+  lockIcon.className = "fa-solid fa-lock fa-lg lock-icon";
+  lockIcon.style.display = "none";
+
+  const unlockIcon = document.createElement("i");
+  unlockIcon.className = "fa-solid fa-unlock fa-lg unlock-icon";
+  unlockIcon.style.display = "block";
+
+  innerElt.appendChild(lockIcon);
+  innerElt.appendChild(unlockIcon);
+  lockClickHandler(lockIcon);
+  unlockClickHandler(unlockIcon);
+
+  return innerElt;
+};
+
 const createNewTask = (taskName = "No-Title") => {
-  const elt = createParagraph("task");
+  const elt = createDiv("task");
   elt.setAttribute("draggable", "true");
   elt.innerText = taskName;
+  const innerElt = createIconsDiv();
+  // console.log("🚀 ~ file: utils.js:142 ~ createNewTask ~ innerElt:", innerElt);
+  elt.appendChild(innerElt);
+  console.log("🚀 ~ file: utils.js:146 ~ createNewTask ~ elt:", elt);
+
+  console.log("trigger completed");
   return elt;
 };
 
@@ -141,7 +205,7 @@ const createNewBoardElement = (boardName) => {
   headingDiv.appendChild(counterPara);
 
   mainBoardDiv.appendChild(headingDiv);
-  console.log("mainBoardDiv = ", mainBoardDiv);
+  // console.log("mainBoardDiv = ", mainBoardDiv);
 
   const tasksBoardDiv = createDiv(`tasks-board ${boardTitle}-tasks-board`);
   setBoardAttributeToElement(tasksBoardDiv, boardTitle);

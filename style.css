@@ -43,6 +43,9 @@
   border-radius: 8px;
   background-color: white;
   cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .title {
@@ -209,4 +212,12 @@ strong {
   cursor: pointer;
   border: 1px solid rgb(216, 222, 228);
   font-weight: 500;
+}
+
+.lock-icon{
+  display: none;
+}
+
+.unlock-icon {
+  display: block;
 }

@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
   <title>Kanban board</title>
   <link rel="icon" type="image/x-icon" href="assets/kanban.ico">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/fd55ddd0b5.js" crossorigin="anonymous"></script>
 </head>
 
 <body id="main">
@@ -28,50 +29,6 @@
 
   <section id="board-container">
 
-
-    <!-- <div class="board todo">
-      <div class="heading">
-        <div class="head">
-          <div class="circle"></div>
-          <p class="title">Todo</p>
-        </div>
-        <div class="counter todo-count"></div>
-      </div>
-      <div class="tasks-board todo-tasks-board" board="todo">
-        <p class="task" draggable="true">Task 1</p>
-        <p class="task" draggable="true">Task 2</p>
-        <p class="task" draggable="true">Task 3</p>
-      </div>
-      <div class="add-item-container" board="todo">
-        <div class="input-section todo-section">
-          <input class="input-field todo-input" type="text" placeholder="Start typing to create an draft item">
-          <button class="create-task-btn" board="todo">+</button>
-        </div>
-      </div>
-    </div> -->
-
-
-    <!-- <div class="board inprogress">
-      <div class="heading">
-        <div class="head">
-          <div class="circle"></div>
-          <p class="title">In-Progress</p>
-        </div>
-        <p class="counter inprogress-count"></p>
-      </div>
-      <div class="tasks-board inprogress-tasks-board" board="inprogress">
-        <p class="task" draggable="true">Task 4</p>
-      </div>
-      <div class="add-item-container" board="inprogress">
-        <div class="input-section inprogress-section">
-          <input class="input-field inprogress-input" board="inprogress" type="text"
-            placeholder="Start typing to create an draft item">
-          <button class="create-task-btn" board="inprogress">+</button>
-        </div>
-      </div>
-    </div> -->
-
-
     <!-- <div class="board done">
       <div class="heading">
         <div class="head">
@@ -81,7 +38,21 @@
         <p class="counter done-count"></p>
       </div>
       <div class="tasks-board done-tasks-board" board="done">
-        <p class="task" draggable="true">Task 7</p>
+        <div class="task" draggable="true">
+          Task 7
+          <div class="task-icon">
+            <i class="fa-solid fa-lock fa-lg lock-icon"></i>
+            <i class="fa-solid fa-unlock fa-lg unlock-icon"></i>
+          </div>
+        </div>
+
+        <div class="task" draggable="true">
+          Task 8
+          <div class="task-icon">
+            <i class="fa-solid fa-lock fa-lg lock-icon"></i>
+            <i class="fa-solid fa-unlock fa-lg unlock-icon"></i>
+          </div>
+        </div>
       </div>
       <div class="add-item-container" board="done">
         <div class="input-section done-section">
@@ -92,13 +63,11 @@
       </div>
     </div> -->
 
-
     <div class="plus-board">
       <div class="plus">+</div>
     </div>
 
   </section>
-
 
   <script src="utils.js"></script>
   <script src="kanban.js"></script>

@@ -82,6 +82,7 @@ const triggerCreateTaskBtn = () => {
           const tasksBoard = document.querySelector(`.${board}-tasks-board`);
           tasksBoard.appendChild(newTask);
           setDraggableProperty();
+          // triggerEventToLocks();
 
           inputObject.value = "";
           document.querySelector(`.${board}-section`).style.display = "none";
@@ -145,6 +146,7 @@ const defaultFunctions = () => {
   triggerAddItemFunctionality();
   triggerCreateTaskBtn();
   setTaskCount();
+  // triggerEventToLocks();
 };
 
 const boardList = getLocalStorage("boardList");
@@ -165,10 +167,10 @@ if (!boardList) {
     },
   ];
   setLocalStorage("boardList", defaultboards);
-  console.log("🚀 ~ file: kanban.js:159 ~ defaultboards:", defaultboards);
+  // console.log("🚀 ~ file: kanban.js:159 ~ defaultboards:", defaultboards);
 } else {
   defaultboards = JSON.parse(boardList);
-  console.log("🚀 ~ file: kanban.js:182 ~ currentBoards:", defaultboards);
+  // console.log("🚀 ~ file: kanban.js:182 ~ currentBoards:", defaultboards);
 }
 
 defaultboards.forEach((board) => {
