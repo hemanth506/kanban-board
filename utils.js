@@ -39,32 +39,25 @@ const unlockClickHandler = (element) => {
   });
 };
 
-/* Setting drag over property for all boards and for new boards which is created */
-const setDragOverHandler = () => {
-  const taskBoards = getAllTaskBoards();
-  taskBoards.forEach((board) => {
-    board.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      const taskDragged = document.querySelector(".is-dragging");
-      const closestElt = getClosestElement(board, e.clientY);
-      // const curBoard = getBoardAttribute(board);
-      // console.log("🚀 ~ file: utils.js:27 ~ curBoard:", curBoard)
-      if (closestElt) {
-        board.insertBefore(taskDragged, closestElt);
-      } else {
-        board.appendChild(taskDragged);
-      }
-      setTaskCount();
-    });
+/* Setting drag over property for new boards which is created */
+const setDragOverHandler = (board) => {
+  board.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    const taskDragged = document.querySelector(".is-dragging");
+    const closestElt = getClosestElement(board, e.clientY);
+    if (closestElt) {
+      board.insertBefore(taskDragged, closestElt);
+    } else {
+      board.appendChild(taskDragged);
+    }
+    setTaskCount();
   });
 
-  taskBoards.forEach((board) => {
-    board.addEventListener("drop", (e) => {
-      const curBoard = getBoardAttribute(board);
-      /* set the local variable here */
-      // console.log(e);
-      console.log("🚀 ~ file: utils.js:38 ~ curBoard:", curBoard);
-    });
+  board.addEventListener("drop", (e) => {
+    const curBoard = getBoardAttribute(board);
+    /* set the local variable here */
+    // console.log(e);
+    console.log("🚀 ~ file: utils.js:38 ~ curBoard:", curBoard);
   });
 };
 
@@ -106,6 +99,7 @@ const createTaskElement = (board) => {
   setBoardAttributeToElement(elt, board);
   elt.appendChild(strong);
   elt.innerHTML += "Add Task";
+  addTaskHandler(elt);
   return elt;
 };
 
@@ -194,6 +188,7 @@ const createNewBoardElement = (boardName) => {
   // console.log("mainBoardDiv = ", mainBoardDiv);
 
   const tasksBoardDiv = createDiv(`tasks-board ${boardTitle}-tasks-board`);
+  setDragOverHandler(tasksBoardDiv);
   setBoardAttributeToElement(tasksBoardDiv, boardTitle);
 
   mainBoardDiv.appendChild(tasksBoardDiv);
@@ -212,6 +207,7 @@ const createNewBoardElement = (boardName) => {
   const buttonElement = document.createElement("button");
   buttonElement.innerText = "+";
   buttonElement.className = "create-task-btn";
+  triggerCreateTaskBtn(buttonElement);
   setBoardAttributeToElement(buttonElement, boardTitle);
 
   inputSectionDiv.appendChild(inputField);

@@ -46,21 +46,17 @@ const getClosestElement = (board, yAxis) => {
 };
 
 /**
- * Trigger add item functionality:
-    for all hardcoded board and for newly created boards
+ * Trigger add item functionality
  */
-const triggerAddItemFunctionality = () => {
-  const addItemButtons = document.querySelectorAll(".add-item");
-  addItemButtons.forEach((elt) => {
-    elt.addEventListener("click", () => {
-      const board = getBoardAttribute(elt);
-      if (board) {
-        console.log("🚀 ~ file: kanban.js:51 ~ board:", board);
-        document.querySelector(`.${board}-section`).style.display = "block";
-        document.querySelector(`.${board}-input`).focus();
-        elt.style.display = "none";
-      }
-    });
+const addTaskHandler = (elt) => {
+  elt.addEventListener("click", () => {
+    const board = getBoardAttribute(elt);
+    if (board) {
+      console.log("🚀 ~ file: kanban.js:51 ~ board:", board);
+      document.querySelector(`.${board}-section`).style.display = "block";
+      document.querySelector(`.${board}-input`).focus();
+      elt.style.display = "none";
+    }
   });
 };
 
@@ -68,27 +64,24 @@ const triggerAddItemFunctionality = () => {
  * trigger Create Task Btn:
     triggers a click event for creating new task 
  */
-const triggerCreateTaskBtn = () => {
-  const createTaskBtn = document.querySelectorAll(".create-task-btn");
-  createTaskBtn.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const board = getBoardAttribute(btn);
-      if (board) {
-        const inputObject = document.querySelector(`.${board}-input`);
-        const inputValue = inputObject.value;
+const triggerCreateTaskBtn = (btn) => {
+  btn.addEventListener("click", () => {
+    const board = getBoardAttribute(btn);
+    if (board) {
+      const inputObject = document.querySelector(`.${board}-input`);
+      const inputValue = inputObject.value;
 
-        if (inputValue) {
-          const newTask = createNewTask(inputValue);
-          const tasksBoard = document.querySelector(`.${board}-tasks-board`);
-          tasksBoard.appendChild(newTask);
+      if (inputValue) {
+        const newTask = createNewTask(inputValue);
+        const tasksBoard = document.querySelector(`.${board}-tasks-board`);
+        tasksBoard.appendChild(newTask);
 
-          inputObject.value = "";
-          document.querySelector(`.${board}-section`).style.display = "none";
-          document.querySelector(`.${board}-para`).style.display = "block";
-        }
-        setTaskCount();
+        inputObject.value = "";
+        document.querySelector(`.${board}-section`).style.display = "none";
+        document.querySelector(`.${board}-para`).style.display = "block";
       }
-    });
+      setTaskCount();
+    }
   });
 };
 
@@ -134,18 +127,14 @@ const setAddBoardFunctionality = () => {
       const newboard = createNewBoardElement(boardName);
       boardContainer.insertBefore(newboard, plusBoard);
       addBoardToLocalStorage(boardName);
-      defaultFunctions();
+      setTaskCount();
     }
   });
 };
 
-const defaultFunctions = () => {
-  setDragOverHandler();
-  triggerAddItemFunctionality();
-  triggerCreateTaskBtn();
-  setTaskCount();
-};
-
+/**
+ *
+ */
 const boardList = getLocalStorage("boardList");
 let defaultboards = [];
 if (!boardList) {
@@ -173,4 +162,4 @@ defaultboards.forEach((board) => {
   boardContainer.insertBefore(newBoard, plusBoard);
 });
 
-defaultFunctions();
+setTaskCount();
