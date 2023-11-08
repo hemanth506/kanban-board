@@ -30,7 +30,7 @@
   width: 300px;
   border-radius: 8px;
   padding: 10px 15px;
-  min-height: 380px;
+  min-height: 440px;
   background-color: rgb(246, 248, 250);
   display: grid;
   grid-template-rows: 8% auto 10%;
@@ -38,14 +38,17 @@
 
 .task {
   border: 1px solid rgb(208, 215, 222);
-  margin: 8px 0px;
   padding: 8px;
   border-radius: 8px;
   background-color: white;
   cursor: pointer;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  position: relative;
+}
+
+.task-icon {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
 
 .title {
@@ -65,12 +68,17 @@
   border: 1px solid rgb(119, 0, 255);
 }
 
+.tasks-board {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-right: 10px;
-  /* width: 280px; */
 }
 
 .head {

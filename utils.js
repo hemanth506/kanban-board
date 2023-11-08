@@ -39,6 +39,34 @@ const unlockClickHandler = (element) => {
   });
 };
 
+const getTargetBoardIndex = (boardElt, taskId) => {
+  let curBoardTaskIndex = 0;
+  let found = false;
+  for (let key = 0; key < boardElt.childNodes.length; key++) {
+    console.log(
+      "🚀 ~ board.addEventListener ~ key:",
+      key,
+      taskId,
+      boardElt.childNodes[key].getAttribute("id")
+    );
+    let tempId = boardElt.childNodes[key].getAttribute("id");
+    if (taskId === tempId) {
+      curBoardTaskIndex = key;
+      console.log(
+        "🚀 ~ file: utils.js:103 ~ board.addEventListener ~ curBoardTaskIndex:",
+        curBoardTaskIndex
+      );
+      found = true;
+    }
+
+    if (found) {
+      break;
+    }
+  }
+
+  return curBoardTaskIndex;
+};
+
 /* Setting drag over property for new boards which is created */
 const setDragOverHandler = (board) => {
   board.addEventListener("dragover", (e) => {
@@ -56,7 +84,43 @@ const setDragOverHandler = (board) => {
   board.addEventListener("drop", (e) => {
     const curBoard = getBoardAttribute(board);
     /* set the local variable here */
-    // console.log(e);
+    const taskId = e.target.id;
+    const className = e.target.className;
+    console.log(e);
+    if (className.includes("is-dragging")) {
+      const storage = JSON.parse(getLocalStorage("tasksList"));
+      console.log(storage);
+      console.log("🚀 ~ file ~ id:", taskId);
+
+      let elementObject;
+      let idExists = false;
+      for (let tempBoard in storage) {
+        console.log(storage[tempBoard]);
+        for (let taskIndex in storage[tempBoard]) {
+          console.log(storage[tempBoard][taskIndex].id, taskId);
+          if (storage[tempBoard][taskIndex].id === taskId) {
+            idExists = true;
+            elementObject = storage[tempBoard][taskIndex];
+            storage[tempBoard].splice(taskIndex, 1);
+          }
+        }
+      }
+
+      console.log("🚀 ~ utils.js:101 ~ elementObject:", elementObject);
+
+      if (idExists) {
+        const boardElt = document.querySelector(`.${curBoard}-tasks-board`);
+        console.log("🚀 ~ file: utils.js:76 ", boardElt.childNodes);
+
+        const curBoardTaskIndex = getTargetBoardIndex(boardElt, taskId);
+        console.log("🚀 ~ utils.js:92 ~ curBoardTaskIndex:", curBoardTaskIndex);
+
+        storage[curBoard].splice(curBoardTaskIndex, 0, elementObject);
+        console.log("🚀 ~ file: utils.js:115 ~ storage:", storage);
+        setLocalStorage("tasksList", storage);
+      }
+    }
+
     console.log("🚀 ~ file: utils.js:38 ~ curBoard:", curBoard);
   });
 };
@@ -72,9 +136,12 @@ const getAddBoardInputElement = () =>
 const setBoardAttributeToElement = (element, board) =>
   element.setAttribute("board", board);
 
-const createDiv = (className = "") => {
+const createDiv = (className = "", id = "") => {
   const div = document.createElement("div");
   div.className = className;
+  if (id) {
+    div.id = id;
+  }
   return div;
 };
 
@@ -107,15 +174,21 @@ const getBoardAttribute = (element) => element.getAttribute("board");
 
 const getAllTaskBoards = () => document.querySelectorAll(".tasks-board");
 
-const createIconsDiv = () => {
+const createIconsDiv = (isDraggable) => {
   const innerElt = createDiv("task-icon");
   const lockIcon = document.createElement("i");
   lockIcon.className = "fa-solid fa-lock fa-lg lock-icon";
-  lockIcon.style.display = "none";
 
   const unlockIcon = document.createElement("i");
   unlockIcon.className = "fa-solid fa-unlock fa-lg unlock-icon";
-  unlockIcon.style.display = "block";
+
+  if (isDraggable) {
+    lockIcon.style.display = "none";
+    unlockIcon.style.display = "block";
+  } else {
+    lockIcon.style.display = "block";
+    unlockIcon.style.display = "none";
+  }
 
   innerElt.appendChild(lockIcon);
   innerElt.appendChild(unlockIcon);
@@ -125,17 +198,14 @@ const createIconsDiv = () => {
   return innerElt;
 };
 
-const createNewTask = (taskName = "No-Title") => {
-  const elt = createDiv("task");
-  elt.setAttribute("draggable", "true");
+const createNewTask = (taskName = "No-Title", isDraggable = true, id) => {
+  const elt = createDiv("task", id);
+  elt.setAttribute("draggable", isDraggable ? "true" : "false");
   elt.innerText = taskName;
   setDragListener(elt);
-  const innerElt = createIconsDiv();
-  // console.log("🚀 ~ file: utils.js:142 ~ createNewTask ~ innerElt:", innerElt);
+  const innerElt = createIconsDiv(isDraggable);
   elt.appendChild(innerElt);
-  console.log("🚀 ~ file: utils.js:146 ~ createNewTask ~ elt:", elt);
-
-  console.log("trigger completed");
+  // console.log("trigger completed");
   return elt;
 };
 
@@ -156,6 +226,7 @@ const addBoardDiv = () => {
 
 const addBoardToLocalStorage = (boardName) => {
   const boardList = JSON.parse(getLocalStorage("boardList"));
+  const tasksList = JSON.parse(getLocalStorage("tasksList"));
   if (boardList) {
     let newBoardData = {
       title: boardName,
@@ -163,6 +234,17 @@ const addBoardToLocalStorage = (boardName) => {
     };
     boardList.push(newBoardData);
   }
+
+  console.log(
+    "🚀 ~ file: utils.js:241 ~ addBoardToLocalStorage ~ tasksList:",
+    tasksList
+  );
+  if (tasksList) {
+    tasksList[boardName] = [];
+    console.log("🚀 ~ file: utils.js:245 ~ newBoard:", tasksList);
+    setLocalStorage("tasksList", tasksList);
+  }
+
   setLocalStorage("boardList", boardList);
 };
 

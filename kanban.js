@@ -68,13 +68,29 @@ const triggerCreateTaskBtn = (btn) => {
   btn.addEventListener("click", () => {
     const board = getBoardAttribute(btn);
     if (board) {
+      console.log(
+        "🚀 ~ file: kanban.js:71 ~ btn.addEventListener ~ board:",
+        board
+      );
       const inputObject = document.querySelector(`.${board}-input`);
       const inputValue = inputObject.value;
 
       if (inputValue) {
-        const newTask = createNewTask(inputValue);
+        const id = Math.random().toString().split(".")[1];
+        const newTask = createNewTask(inputValue, true, id);
         const tasksBoard = document.querySelector(`.${board}-tasks-board`);
         tasksBoard.appendChild(newTask);
+
+        const taskObject = {
+          taskName: inputValue,
+          id,
+          isDraggable: true,
+        };
+
+        const tasksList = JSON.parse(getLocalStorage("tasksList"));
+        tasksList[board].push(taskObject);
+        console.log("🚀 ~ file ~ tasksList[board]:", tasksList[board]);
+        setLocalStorage("tasksList", tasksList);
 
         inputObject.value = "";
         document.querySelector(`.${board}-section`).style.display = "none";
@@ -161,5 +177,86 @@ defaultboards.forEach((board) => {
   const newBoard = createNewBoardElement(board.title);
   boardContainer.insertBefore(newBoard, plusBoard);
 });
+
+const taskList = getLocalStorage("tasksList");
+let existingTasksPerBoard = {};
+if (taskList) {
+  existingTasksPerBoard = JSON.parse(taskList);
+} else {
+  existingTasksPerBoard = {
+    todo: [
+      {
+        taskName: "Task 1",
+        id: "7886093563628085",
+        isDraggable: false,
+      },
+      {
+        taskName: "Task 2",
+        id: "4367851167784713",
+        isDraggable: true,
+      },
+      {
+        taskName: "Task 3",
+        id: "5668130177829256",
+        isDraggable: true,
+      },
+    ],
+    inprogress: [
+      {
+        taskName: "Task 4",
+        id: "7614025157540099",
+        isDraggable: false,
+      },
+      {
+        taskName: "Task 5",
+        id: "8067512053366448",
+        isDraggable: true,
+      },
+      {
+        taskName: "Task 6",
+        id: "4862102792034877",
+        isDraggable: true,
+      },
+      {
+        taskName: "Task 16",
+        id: "4121022054471768",
+        isDraggable: true,
+      },
+    ],
+    done: [
+      {
+        taskName: "Task 7",
+        id: "05641306725532025",
+        isDraggable: false,
+      },
+      {
+        taskName: "Task 8",
+        id: "8451687988460426",
+        isDraggable: true,
+      },
+      {
+        taskName: "Task 9",
+        id: "03059051277752034",
+        isDraggable: true,
+      },
+    ],
+  };
+  setLocalStorage("tasksList", existingTasksPerBoard);
+}
+
+for (let board in existingTasksPerBoard) {
+  let N = existingTasksPerBoard[board].length;
+  for (let i = 0; i < N; i++) {
+    const currentBoardTasks = existingTasksPerBoard[board];
+    // console.log(currentBoardTasks[i].board)
+    const newTask = createNewTask(
+      currentBoardTasks[i].taskName,
+      currentBoardTasks[i].isDraggable,
+      currentBoardTasks[i].id
+    );
+    const tasksBoard = document.querySelector(`.${board}-tasks-board`);
+    tasksBoard.appendChild(newTask);
+  }
+}
 
 setTaskCount();
