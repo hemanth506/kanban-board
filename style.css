@@ -30,7 +30,7 @@
   width: 300px;
   border-radius: 8px;
   padding: 10px 15px;
-  min-height: 440px;
+  min-height: 420px;
   background-color: rgb(246, 248, 250);
   display: grid;
   grid-template-rows: 8% auto 10%;
