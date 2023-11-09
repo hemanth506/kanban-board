@@ -184,62 +184,9 @@ if (taskList) {
   existingTasksPerBoard = JSON.parse(taskList);
 } else {
   existingTasksPerBoard = {
-    todo: [
-      {
-        taskName: "Task 1",
-        id: "7886093563628085",
-        isDraggable: false,
-      },
-      {
-        taskName: "Task 2",
-        id: "4367851167784713",
-        isDraggable: true,
-      },
-      {
-        taskName: "Task 3",
-        id: "5668130177829256",
-        isDraggable: true,
-      },
-    ],
-    inprogress: [
-      {
-        taskName: "Task 4",
-        id: "7614025157540099",
-        isDraggable: false,
-      },
-      {
-        taskName: "Task 5",
-        id: "8067512053366448",
-        isDraggable: true,
-      },
-      {
-        taskName: "Task 6",
-        id: "4862102792034877",
-        isDraggable: true,
-      },
-      {
-        taskName: "Task 16",
-        id: "4121022054471768",
-        isDraggable: true,
-      },
-    ],
-    done: [
-      {
-        taskName: "Task 7",
-        id: "05641306725532025",
-        isDraggable: false,
-      },
-      {
-        taskName: "Task 8",
-        id: "8451687988460426",
-        isDraggable: true,
-      },
-      {
-        taskName: "Task 9",
-        id: "03059051277752034",
-        isDraggable: true,
-      },
-    ],
+    todo: [],
+    inprogress: [],
+    done: [],
   };
   setLocalStorage("tasksList", existingTasksPerBoard);
 }
