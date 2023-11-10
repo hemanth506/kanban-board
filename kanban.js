@@ -27,6 +27,13 @@ saveFilterBtn.addEventListener("click", () => {
   setTaskCount();
 });
 
+/**
+ *  This element is used to get the closest task of the dragged element
+ * @param {HTMLElement} board The element from which we have to 
+ *                         find the task which is not dragging
+ * @param {number} yAxis
+ * @returns HTML element
+ */
 const getClosestElement = (board, yAxis) => {
   const tasksInBoard = board.querySelectorAll(".task:not(.is-dragging)");
 
@@ -46,7 +53,8 @@ const getClosestElement = (board, yAxis) => {
 };
 
 /**
- * Trigger add item functionality
+ * This function is used to trigger add item functionality
+ * @param {HTMLElement} elt 
  */
 const addTaskHandler = (elt) => {
   elt.addEventListener("click", () => {
@@ -61,17 +69,14 @@ const addTaskHandler = (elt) => {
 };
 
 /**
- * trigger Create Task Btn:
-    triggers a click event for creating new task 
+ * This function will trigger the create task button
+ * and add the task in local storage.
+ * @param {HTMLElement} btn
  */
 const triggerCreateTaskBtn = (btn) => {
   btn.addEventListener("click", () => {
     const board = getBoardAttribute(btn);
     if (board) {
-      console.log(
-        "🚀 ~ file: kanban.js:71 ~ btn.addEventListener ~ board:",
-        board
-      );
       const inputObject = document.querySelector(`.${board}-input`);
       const inputValue = inputObject.value;
 
@@ -89,7 +94,6 @@ const triggerCreateTaskBtn = (btn) => {
 
         const tasksList = JSON.parse(getLocalStorage("tasksList"));
         tasksList[board].push(taskObject);
-        console.log("🚀 ~ file ~ tasksList[board]:", tasksList[board]);
         setLocalStorage("tasksList", tasksList);
 
         inputObject.value = "";
@@ -101,8 +105,8 @@ const triggerCreateTaskBtn = (btn) => {
   });
 };
 
-/***
- * set the task count for each board
+/**
+ * This function is used to set the task count for each board
  */
 const setTaskCount = () => {
   const taskBoards = getAllTaskBoards();
@@ -130,6 +134,9 @@ plusBtn.addEventListener("click", () => {
   addBoardInput.focus();
 });
 
+/**
+ *  this function is to trigger the all board functionality
+ */
 const setAddBoardFunctionality = () => {
   const addBoard = document.querySelector(".add-board");
   const addNewBoardDiv = document.querySelector(".add-new-board");
@@ -137,7 +144,7 @@ const setAddBoardFunctionality = () => {
   addBoard.addEventListener("click", () => {
     addNewBoardDiv.remove(); // remove add button and replace with input field and add button
     plusBtn.innerText = "+";
-    const boardName = addBoardInput.value;
+    const boardName = addBoardInput.value.toLowerCase();
     console.log("boardName = " + boardName);
     if (boardName) {
       const newboard = createNewBoardElement(boardName);
@@ -149,7 +156,7 @@ const setAddBoardFunctionality = () => {
 };
 
 /**
- *
+ * The below code is uded to render the boards from local storage
  */
 const boardList = getLocalStorage("boardList");
 let defaultboards = [];
@@ -178,6 +185,9 @@ defaultboards.forEach((board) => {
   boardContainer.insertBefore(newBoard, plusBoard);
 });
 
+/**
+ * The below code is used to render the tasks from local storage
+ */
 const taskList = getLocalStorage("tasksList");
 let existingTasksPerBoard = {};
 if (taskList) {
