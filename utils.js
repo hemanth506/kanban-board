@@ -1,6 +1,13 @@
+/**
+ * This function is used to return al the task in the document
+ * @returns HTML elements
+ */
 const getAllTasks = () => document.querySelectorAll(".task");
 
-/* Setting drag start and drag end property for all tasks */
+/**
+ * This function is use to set drag start and drag end property for all tasks
+ * @param {HTMLElement} task The element in which the handler should add 
+ */
 const setDragListener = (task) => {
   task.addEventListener("dragstart", (e) => {
     task.classList.add("is-dragging");
@@ -11,13 +18,22 @@ const setDragListener = (task) => {
   });
 };
 
+/**
+ * This function is used to return the parent and all the siblings of the element
+ * @param {HTMLElement} element 
+ * @returns HTML element
+ */
 const getParentAndSiblings = (element) => {
   const parent = element.parentElement;
   const siblings = Array.from(parent.children);
   return [parent.parentElement, siblings];
 };
 
-const lockClickHandler = (element) => {
+/**
+ * This function is to unlock the task from dragging.
+ * @param {HTMLElement} element The element in which we have to set the click handler
+ */
+const unLockClickHandler = (element) => {
   element.addEventListener("click", () => {
     const [grandParent, siblings] = getParentAndSiblings(element);
     grandParent.setAttribute("draggable", "true");
@@ -28,7 +44,11 @@ const lockClickHandler = (element) => {
   });
 };
 
-const unlockClickHandler = (element) => {
+/**
+ * This function is to lock the task from dragging.
+ * @param {HTMLElement} element The element in which we have to set the click handler
+ */
+const lockClickHandler = (element) => {
   element.addEventListener("click", () => {
     const [grandParent, siblings] = getParentAndSiblings(element);
     grandParent.setAttribute("draggable", "false");
@@ -39,26 +59,22 @@ const unlockClickHandler = (element) => {
   });
 };
 
+/**
+ * This function is used to get the index of the task 
+ * to which we can push the object of the dragged task
+ * @param {HTMLElement} boardElt 
+ * @param {string} taskId  This field will help to identify which task it is.
+ * @returns Integer
+ */
 const getTargetBoardIndex = (boardElt, taskId) => {
   let curBoardTaskIndex = 0;
   let found = false;
   for (let key = 0; key < boardElt.childNodes.length; key++) {
-    console.log(
-      "🚀 ~ board.addEventListener ~ key:",
-      key,
-      taskId,
-      boardElt.childNodes[key].getAttribute("id")
-    );
     let tempId = boardElt.childNodes[key].getAttribute("id");
     if (taskId === tempId) {
       curBoardTaskIndex = key;
-      console.log(
-        "🚀 ~ file: utils.js:103 ~ board.addEventListener ~ curBoardTaskIndex:",
-        curBoardTaskIndex
-      );
       found = true;
     }
-
     if (found) {
       break;
     }
@@ -67,7 +83,10 @@ const getTargetBoardIndex = (boardElt, taskId) => {
   return curBoardTaskIndex;
 };
 
-/* Setting drag over property for new boards which is created */
+/**
+ * This function is used to set the dragover functionality
+ * @param {HTMLElement} board The html element in which we have to set the dragover listener
+ */
 const setDragOverHandler = (board) => {
   board.addEventListener("dragover", (e) => {
     e.preventDefault();
@@ -83,14 +102,15 @@ const setDragOverHandler = (board) => {
 
   board.addEventListener("drop", (e) => {
     const curBoard = getBoardAttribute(board);
+
     /* set the local variable here */
     const taskId = e.target.id;
     const className = e.target.className;
     console.log(e);
     if (className.includes("is-dragging")) {
       const storage = JSON.parse(getLocalStorage("tasksList"));
-      console.log(storage);
-      console.log("🚀 ~ file ~ id:", taskId);
+      // console.log(storage);
+      // console.log("🚀 ~ file ~ id:", taskId);
 
       let elementObject;
       let idExists = false;
@@ -110,13 +130,13 @@ const setDragOverHandler = (board) => {
 
       if (idExists) {
         const boardElt = document.querySelector(`.${curBoard}-tasks-board`);
-        console.log("🚀 ~ file: utils.js:76 ", boardElt.childNodes);
+        // console.log("🚀 ~ file: utils.js:76 ", boardElt.childNodes);
 
         const curBoardTaskIndex = getTargetBoardIndex(boardElt, taskId);
-        console.log("🚀 ~ utils.js:92 ~ curBoardTaskIndex:", curBoardTaskIndex);
+        // console.log("🚀 ~ utils.js:92 ~ curBoardTaskIndex:", curBoardTaskIndex);
 
         storage[curBoard].splice(curBoardTaskIndex, 0, elementObject);
-        console.log("🚀 ~ file: utils.js:115 ~ storage:", storage);
+        // console.log("🚀 ~ file: utils.js:115 ~ storage:", storage);
         setLocalStorage("tasksList", storage);
       }
     }
@@ -125,17 +145,44 @@ const setDragOverHandler = (board) => {
   });
 };
 
+/**
+ * This function is used to get the item from localstorage
+ * @param {string} variable This field is the key which helps to fetch the value in localstorag
+ * @returns Object
+ */
 const getLocalStorage = (variable) => localStorage.getItem(variable);
 
+/**
+ * This function is used to set value in the local storage
+ * @param {string} variable This field acts as the key of the localstorage
+ * @param {object} value This field acts as the object
+ * @returns 
+ */
 const setLocalStorage = (variable, value) =>
   localStorage.setItem(variable, JSON.stringify(value));
 
+/**
+ * This function is used to fetch all the elements which has class as "add-board-input"
+ * @returns HTML element
+ */
 const getAddBoardInputElement = () =>
   document.querySelector(".add-board-input");
 
+/**
+ * This function is used to set the board attribute for the element
+ * @param {HTMLElement} element This element is where we have to set the board attribute
+ * @param {string} board This field is used to set the value of the board attribute
+ * @returns HTML element
+ */
 const setBoardAttributeToElement = (element, board) =>
   element.setAttribute("board", board);
 
+/**
+ * This function is used to create a div element
+ * @param {string} className This field is acts as the class name of the div
+ * @param {string} id This field is acts as the class name of the div
+ * @returns HTML element
+ */
 const createDiv = (className = "", id = "") => {
   const div = document.createElement("div");
   div.className = className;
@@ -145,12 +192,24 @@ const createDiv = (className = "", id = "") => {
   return div;
 };
 
+/**
+ * This function is used to create a paragraph element
+ * @param {string} className This field is acts as the class name of the paragraph
+ * @returns HTML element
+ */
 const createParagraph = (className = "") => {
   const para = document.createElement("p");
   para.className = className;
   return para;
 };
 
+/**
+ * This function is used to create a input field
+ * @param {string} className This field is acts as the class name
+ * @param {string} placeHolder This field acts as the placeholder text for the inpout field
+ * @param {string} type This field is used to specify the type of the input field
+ * @returns HTML element
+ */
 const createInputField = (className = "", placeHolder = "", type) => {
   const input = document.createElement("input");
   input.className = className;
@@ -159,6 +218,12 @@ const createInputField = (className = "", placeHolder = "", type) => {
   return input;
 };
 
+/**
+ * This function is used to return the HTML element which has the ability to show the field
+ * which help to add task in each board.
+ * @param {string} board This field is to assign the value for the class
+ * @returns HTML element (add-item <board-name>-para)
+ */
 const createTaskElement = (board) => {
   const strong = document.createElement("strong");
   strong.innerText = "+";
@@ -170,10 +235,25 @@ const createTaskElement = (board) => {
   return elt;
 };
 
+/**
+ * This function is used to get the board value of a particular element
+ * @param {HTMLElement} Element This is an  element from which we need to get the board value
+ * @returns String
+ */
 const getBoardAttribute = (element) => element.getAttribute("board");
 
+/**
+ * This function is used to return all the available task boards
+ * @returns HTML element
+ */
 const getAllTaskBoards = () => document.querySelectorAll(".tasks-board");
 
+/**
+ * This function is used to set he lock/unlock icon in each task.
+ * This also triggers the click handler for lock/unlock functionality
+ * @param {boolean} isDraggable This field is used to make the toggle between the lock/unlock icon
+ * @returns HTML element (task-icon)
+ */
 const createIconsDiv = (isDraggable) => {
   const innerElt = createDiv("task-icon");
   const lockIcon = document.createElement("i");
@@ -192,12 +272,20 @@ const createIconsDiv = (isDraggable) => {
 
   innerElt.appendChild(lockIcon);
   innerElt.appendChild(unlockIcon);
-  lockClickHandler(lockIcon);
-  unlockClickHandler(unlockIcon);
+  unLockClickHandler(lockIcon);
+  lockClickHandler(unlockIcon);
 
   return innerElt;
 };
 
+/**
+ * This function is used to create a new task div which is draggable by default
+ * @param {string} taskName This field will the task name of that div
+ * @param {boolean} isDraggable This filed will help to make the task draggable but by default,
+ *                                it is true
+ * @param {string} id This field is to provide the id for the task div
+ * @returns HTML element (task)
+ */
 const createNewTask = (taskName = "No-Title", isDraggable = true, id) => {
   const elt = createDiv("task", id);
   elt.setAttribute("draggable", isDraggable ? "true" : "false");
@@ -205,10 +293,14 @@ const createNewTask = (taskName = "No-Title", isDraggable = true, id) => {
   setDragListener(elt);
   const innerElt = createIconsDiv(isDraggable);
   elt.appendChild(innerElt);
-  // console.log("trigger completed");
   return elt;
 };
 
+/**
+ * this function is used to create a container in which we can type the new board name and 
+ * a button to submit.   
+ * @returns - HTML element (add-new-board)
+ */
 const addBoardDiv = () => {
   const holder = createDiv("add-new-board");
   const inputElement = createInputField(
@@ -224,6 +316,11 @@ const addBoardDiv = () => {
   return holder;
 };
 
+/**
+ * This function is used to add the board object in the local storage.
+ * @param {*} boardName - The parameter is used as a value in a title in an object 
+ *                        of the boardList in local storage.
+ */
 const addBoardToLocalStorage = (boardName) => {
   const boardList = JSON.parse(getLocalStorage("boardList"));
   const tasksList = JSON.parse(getLocalStorage("tasksList"));
@@ -248,7 +345,12 @@ const addBoardToLocalStorage = (boardName) => {
   setLocalStorage("boardList", boardList);
 };
 
-// Create new board
+/**
+ * This function is used to create a new board div 
+ * @param {string} boardName - The parameter will be the board name in the UI and the
+ *                            class for that div will be assigned using this name.
+ * @returns - HTML element (board <board-name>)
+ */
 const createNewBoardElement = (boardName) => {
   const boardTitle = boardName.toLowerCase().trim();
   const mainBoardDiv = createDiv(`board ${boardTitle}`);
